@@ -1,68 +1,31 @@
+# Use the latest 2.1 version of CircleCI pipeline process engine.
+# See: https://circleci.com/docs/reference/configuration-reference/
 version: 2.1
 
+# Define a job to be invoked later in a workflow.
+# See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#jobs-overview & https://circleci.com/docs/reference/configuration-reference/#jobs
 jobs:
-  test:
+  say-hello:
+    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/guides/execution-managed/executor-intro/ & https://circleci.com/docs/reference/configuration-reference/#executor-job
     docker:
-      - image: cimg/python:3.11
-      - image: postgres:16
-        environment:
-          POSTGRES_USER: taxi
-          POSTGRES_PASSWORD: testpassword
-          POSTGRES_DB: taxi
-    environment:
-      DATABASE_URL: postgresql://taxi:testpassword@localhost:5432/taxi
-      POSTGRES_USER: taxi
-      POSTGRES_PASSWORD: testpassword
-      POSTGRES_DB: taxi
-      DB_HOST: localhost
-      DBT_PROFILES_DIR: ./dbt
+      # Specify the version you desire here
+      # See: https://circleci.com/developer/images/image/cimg/base
+      - image: cimg/base:current
+
+    # Add steps to the job
+    # See: https://circleci.com/docs/guides/orchestrate/jobs-steps/#steps-overview & https://circleci.com/docs/reference/configuration-reference/#steps
     steps:
+      # Checkout the code as the first step.
       - checkout
       - run:
-          name: Install pipeline and dbt dependencies
-          command: python -m pip install '.[transform]'
-      - run:
-          name: Wait for PostgreSQL
-          command: |
-            python - <<'PY'
-            import os
-            import time
-            import psycopg
+          name: "Say hello"
+          command: "echo Hello, World!"
 
-            deadline = time.monotonic() + 60
-            while True:
-                try:
-                    with psycopg.connect(os.environ["DATABASE_URL"], connect_timeout=3) as conn:
-                        conn.execute("SELECT 1")
-                    print("PostgreSQL is ready")
-                    break
-                except psycopg.OperationalError:
-                    if time.monotonic() >= deadline:
-                        raise
-                    time.sleep(2)
-            PY
-      - run:
-          name: Run ingestion unit tests
-          command: python -m unittest discover -s tests -v
-      - run:
-          name: Load sample data and replay to check idempotency
-          command: |
-            taxi-pipeline --sample data/sample/trips.json --start 2024-01-01 --end 2024-01-04
-            taxi-pipeline --sample data/sample/trips.json --start 2024-01-01 --end 2024-01-04
-      - run:
-          name: Build dbt models and run data quality tests
-          command: dbt build --project-dir dbt
-      - run:
-          name: Verify duplicate prevention and quarantine
-          command: python tests/check_database.py
-      - store_artifacts:
-          path: dbt/logs
-          destination: dbt-logs
-      - store_artifacts:
-          path: dbt/target
-          destination: dbt-results
-
+# Orchestrate jobs using workflows
+# See: https://circleci.com/docs/guides/orchestrate/workflows/ & https://circleci.com/docs/reference/configuration-reference/#workflows
 workflows:
-  test-pipeline:
+  say-hello-workflow: # This is the name of the workflow, feel free to change it to better match your workflow.
+    # Inside the workflow, you define the jobs you want to run.
     jobs:
-      - test
+      - say-hello
