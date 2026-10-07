@@ -42,6 +42,9 @@ jobs:
     - run: 'python scripts/run_warehouse.py
 
         python tests/check_warehouse.py'
+    - run: 'python tableau/export_data.py --output /tmp/tableau-trip-export.csv
+
+        python tests/check_tableau_export.py /tmp/tableau-trip-export.csv'
 'on':
 - push
 - pull_request

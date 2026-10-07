@@ -15,6 +15,9 @@ with psycopg.connect(os.environ["DATABASE_URL"]) as conn:
     assert scalar("select sum(revenue_usd) from gold.mart_daily")==scalar("select sum(trip_total) from silver.fct_trips")
     assert scalar("select sum(reported_total_usd) from gold.mart_taxi_earnings")==scalar("select sum(trip_total) from silver.fct_trips")
     assert scalar("select count(*) from gold.mart_trip_distances")==120
+    assert scalar("select count(*) from gold.mart_tableau_trips")==120
+    assert scalar("select count(distinct trip_id) from gold.mart_tableau_trips")==120
+    assert scalar("select sum(trip_total) from gold.mart_tableau_trips")==scalar("select sum(revenue_usd) from gold.mart_daily")
     assert scalar("select count(*) from silver.fct_trips where abs(distance_km-trip_miles*1.609344)>0.000001")==0
     for name,natural in [("taxi","taxi_id"),("payment","payment_type"),("company","company"),("area","area")]:
         assert scalar(f"select count(*)-count(distinct {name}_key) from silver.dim_{name}")==0
