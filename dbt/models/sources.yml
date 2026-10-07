@@ -1,0 +1,21 @@
+version: 2
+sources:
+  - name: bronze
+    schema: bronze
+    tables:
+      - name: trips
+models:
+  - name: stg_trips
+    columns:
+      - name: trip_id
+        tests: [unique, not_null]
+  - name: fct_trips
+    columns:
+      - name: trip_id
+        tests: [unique, not_null]
+      - name: trip_date
+        tests: [not_null]
+  - name: mart_daily
+    columns:
+      - name: trip_date
+        tests: [unique, not_null]

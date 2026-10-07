@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+*.db
+data/raw/
+data/lake/
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+.sparkStaging/
+dbt/.user.yml
