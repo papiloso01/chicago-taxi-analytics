@@ -47,5 +47,6 @@ def build_models(bronze):
     models={"silver.fct_trips":fact,"silver.quarantine_trips":rejected,"silver.dim_date":dates,
             "gold.mart_daily":daily,"gold.mart_taxi_earnings":taxi,"gold.mart_trip_distances":distances,
             "gold.mart_hourly":hourly,"gold.mart_payment":payment}
+    models["gold.mart_tableau_trips"] = fact.select("trip_id","trip_date","trip_hour","taxi_id","payment_type","company","pickup_community_area","dropoff_community_area","distance_km","trip_total","tips","trip_seconds")
     models.update({"silver.dim_"+k:v for k,v in dims.items()})
     return models

@@ -76,3 +76,7 @@ CircleCI runs the sample test pipeline after the repository is connected to a Ci
 ## Sources and limits
 
 [Chicago Taxi Trips](https://catalog.data.gov/dataset/taxi-trips-2024) has medallion-level taxi IDs, not driver identities or passenger gender. Rank taxis by reported gross totals, not driver net income. Reported trip miles are converted to kilometres; this does not reconstruct road geometry. Shortest-trip reporting excludes zero distance while preserving those rows for inspection. Source data retains provider terms; code is MIT licensed.
+
+## Tableau dashboard review
+
+See [Tableau workbook, sample data and connection steps](tableau/README.md). The workbook is a generated template requiring Desktop render validation. Gold now includes a shared trip-grain mart_tableau_trips dataset.

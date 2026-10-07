@@ -52,6 +52,11 @@ jobs:
         command: 'python scripts/run_warehouse.py
 
           python tests/check_warehouse.py'
+    - run:
+        name: Validate gold export for Tableau
+        command: 'python tableau/export_data.py --output /tmp/tableau-trip-export.csv
+
+          python tests/check_tableau_export.py /tmp/tableau-trip-export.csv'
     - store_artifacts:
         path: docs
         destination: warehouse-design
