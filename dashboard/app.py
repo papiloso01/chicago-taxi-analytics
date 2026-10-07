@@ -19,7 +19,7 @@ def load(table):
     import psycopg
     with psycopg.connect(os.environ["DATABASE_URL"]) as conn:
         with conn.cursor() as cur:
-            cur.execute(f"SELECT * FROM analytics.{table}")
+            cur.execute(f"SELECT * FROM gold.{table}")
             return pd.DataFrame(cur.fetchall(), columns=[col.name for col in cur.description])
 
 try:

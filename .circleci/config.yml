@@ -1,14 +1,13 @@
 version: 2.1
-
 jobs:
   test:
     docker:
-      - image: cimg/python:3.11
-      - image: postgres:16
-        environment:
-          POSTGRES_USER: taxi
-          POSTGRES_PASSWORD: testpassword
-          POSTGRES_DB: taxi
+    - image: cimg/python:3.11
+    - image: postgres:16
+      environment:
+        POSTGRES_USER: taxi
+        POSTGRES_PASSWORD: testpassword
+        POSTGRES_DB: taxi
     environment:
       DATABASE_URL: postgresql://taxi:testpassword@localhost:5432/taxi
       POSTGRES_USER: taxi
@@ -16,53 +15,53 @@ jobs:
       POSTGRES_DB: taxi
       DB_HOST: localhost
       DBT_PROFILES_DIR: ./dbt
+      JDBC_URL: jdbc:postgresql://localhost:5432/taxi
+      PYSPARK_SUBMIT_ARGS: --jars /tmp/postgresql.jar pyspark-shell
+      SPARK_LOCAL_IP: 127.0.0.1
+      JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
     steps:
-      - checkout
-      - run:
-          name: Install pipeline and dbt dependencies
-          command: python -m pip install '.[transform]'
-      - run:
-          name: Wait for PostgreSQL
-          command: |
-            python - <<'PY'
-            import os
-            import time
-            import psycopg
+    - checkout
+    - run:
+        name: Install Java and PostgreSQL JDBC driver
+        command: 'sudo apt-get update
 
-            deadline = time.monotonic() + 60
-            while True:
-                try:
-                    with psycopg.connect(os.environ["DATABASE_URL"], connect_timeout=3) as conn:
-                        conn.execute("SELECT 1")
-                    print("PostgreSQL is ready")
-                    break
-                except psycopg.OperationalError:
-                    if time.monotonic() >= deadline:
-                        raise
-                    time.sleep(2)
-            PY
-      - run:
-          name: Run ingestion unit tests
-          command: python -m unittest discover -s tests -v
-      - run:
-          name: Load sample data and replay to check idempotency
-          command: |
-            taxi-pipeline --sample data/sample/trips.json --start 2024-01-01 --end 2024-01-04
-            taxi-pipeline --sample data/sample/trips.json --start 2024-01-01 --end 2024-01-04
-      - run:
-          name: Build dbt models and run data quality tests
-          command: dbt build --project-dir dbt
-      - run:
-          name: Verify duplicate prevention and quarantine
-          command: python tests/check_database.py
-      - store_artifacts:
-          path: dbt/logs
-          destination: dbt-logs
-      - store_artifacts:
-          path: dbt/target
-          destination: dbt-results
+          sudo apt-get install -y openjdk-17-jre-headless
 
+          curl -fsSL https://repo.maven.apache.org/maven2/org/postgresql/postgresql/42.7.5/postgresql-42.7.5.jar
+          -o /tmp/postgresql.jar'
+    - run:
+        name: Install pipeline and PySpark
+        command: python -m pip install '.[spark,test]'
+    - run:
+        name: Wait for PostgreSQL
+        command: python scripts/wait_database.py
+    - run:
+        name: Run API, date-window and Spark unit tests
+        command: python -m xmlrunner discover -s tests -v -o test-results
+    - run:
+        name: Test ingestion, replay and failure audit
+        command: python tests/integration_ingestion.py
+    - run:
+        name: Transform bronze to silver and gold
+        command: python scripts/run_warehouse.py
+    - run:
+        name: Reconcile all layers and dimension joins
+        command: python tests/check_warehouse.py
+    - run:
+        name: Replay warehouse and verify consistent results
+        command: 'python scripts/run_warehouse.py
+
+          python tests/check_warehouse.py'
+    - store_artifacts:
+        path: docs
+        destination: warehouse-design
+    - store_test_results:
+        path: test-results
+    - store_artifacts:
+        path: test-results
+        destination: unit-test-results
+    resource_class: medium
 workflows:
   test-pipeline:
     jobs:
-      - test
+    - test

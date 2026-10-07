@@ -3,7 +3,8 @@ import json
 import os
 import logging
 import uuid
-from datetime import date, timedelta
+from datetime import date
+from .windows import daily_window, year_window
 from pathlib import Path
 from .api import pages
 
@@ -24,10 +25,13 @@ def main():
     parser.add_argument("--start", default=os.getenv("START_DATE"))
     parser.add_argument("--end", default=os.getenv("END_DATE"))
     parser.add_argument("--sample", type=Path)
+    parser.add_argument("--year", type=int, help="Initial completed-calendar-year backfill")
     args = parser.parse_args()
-    today = date.today()
-    start = args.start or str(today - timedelta(days=7))
-    end = args.end or str(today)
+    if args.year and (args.start or args.end):
+        parser.error("Use --year OR explicit dates")
+    default_start, default_end = year_window(args.year) if args.year else daily_window()
+    start = args.start or default_start
+    end = args.end or default_end
     if date.fromisoformat(start) >= date.fromisoformat(end):
         parser.error("start must precede end")
     import psycopg

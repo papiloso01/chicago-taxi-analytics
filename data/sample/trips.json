@@ -9,7 +9,8 @@
     "trip_total": "10",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "1"
+    "pickup_community_area": "1",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0001",
@@ -21,7 +22,8 @@
     "trip_total": "12",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "2"
+    "pickup_community_area": "2",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0002",
@@ -33,7 +35,8 @@
     "trip_total": "14",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "3"
+    "pickup_community_area": "3",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0003",
@@ -45,7 +48,8 @@
     "trip_total": "16",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "4"
+    "pickup_community_area": "4",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0004",
@@ -57,7 +61,8 @@
     "trip_total": "18",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "5"
+    "pickup_community_area": "5",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0005",
@@ -69,7 +74,8 @@
     "trip_total": "20",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "6"
+    "pickup_community_area": "6",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0006",
@@ -81,7 +87,8 @@
     "trip_total": "16",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "7"
+    "pickup_community_area": "7",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0007",
@@ -93,7 +100,8 @@
     "trip_total": "18",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "8"
+    "pickup_community_area": "8",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0008",
@@ -105,7 +113,8 @@
     "trip_total": "20",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "9"
+    "pickup_community_area": "9",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0009",
@@ -117,7 +126,8 @@
     "trip_total": "22",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "10"
+    "pickup_community_area": "10",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0010",
@@ -129,7 +139,8 @@
     "trip_total": "24",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "11"
+    "pickup_community_area": "11",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0011",
@@ -141,7 +152,8 @@
     "trip_total": "26",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "12"
+    "pickup_community_area": "12",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0012",
@@ -153,7 +165,8 @@
     "trip_total": "22",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "13"
+    "pickup_community_area": "13",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0013",
@@ -165,7 +178,8 @@
     "trip_total": "24",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "14"
+    "pickup_community_area": "14",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0014",
@@ -177,7 +191,8 @@
     "trip_total": "26",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "15"
+    "pickup_community_area": "15",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0015",
@@ -189,7 +204,8 @@
     "trip_total": "28",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "16"
+    "pickup_community_area": "16",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0016",
@@ -201,7 +217,8 @@
     "trip_total": "30",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "17"
+    "pickup_community_area": "17",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0017",
@@ -213,7 +230,8 @@
     "trip_total": "15",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "18"
+    "pickup_community_area": "18",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0018",
@@ -225,7 +243,8 @@
     "trip_total": "11",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "19"
+    "pickup_community_area": "19",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0019",
@@ -237,7 +256,8 @@
     "trip_total": "13",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "20"
+    "pickup_community_area": "20",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0020",
@@ -249,7 +269,8 @@
     "trip_total": "15",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "21"
+    "pickup_community_area": "21",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0021",
@@ -261,7 +282,8 @@
     "trip_total": "17",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "22"
+    "pickup_community_area": "22",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0022",
@@ -273,7 +295,8 @@
     "trip_total": "19",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "23"
+    "pickup_community_area": "23",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0023",
@@ -285,7 +308,8 @@
     "trip_total": "21",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "24"
+    "pickup_community_area": "24",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0024",
@@ -297,7 +321,8 @@
     "trip_total": "17",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "25"
+    "pickup_community_area": "25",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0025",
@@ -309,7 +334,8 @@
     "trip_total": "19",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "26"
+    "pickup_community_area": "26",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0026",
@@ -321,7 +347,8 @@
     "trip_total": "21",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "27"
+    "pickup_community_area": "27",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0027",
@@ -333,7 +360,8 @@
     "trip_total": "23",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "28"
+    "pickup_community_area": "28",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0028",
@@ -345,7 +373,8 @@
     "trip_total": "25",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "29"
+    "pickup_community_area": "29",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0029",
@@ -357,7 +386,8 @@
     "trip_total": "27",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "30"
+    "pickup_community_area": "30",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0030",
@@ -369,7 +399,8 @@
     "trip_total": "23",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "31"
+    "pickup_community_area": "31",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0031",
@@ -381,7 +412,8 @@
     "trip_total": "25",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "32"
+    "pickup_community_area": "32",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0032",
@@ -393,7 +425,8 @@
     "trip_total": "27",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "33"
+    "pickup_community_area": "33",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0033",
@@ -405,7 +438,8 @@
     "trip_total": "29",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "34"
+    "pickup_community_area": "34",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0034",
@@ -417,7 +451,8 @@
     "trip_total": "14",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "35"
+    "pickup_community_area": "35",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0035",
@@ -429,7 +464,8 @@
     "trip_total": "16",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "36"
+    "pickup_community_area": "36",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0036",
@@ -441,7 +477,8 @@
     "trip_total": "12",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "37"
+    "pickup_community_area": "37",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0037",
@@ -453,7 +490,8 @@
     "trip_total": "14",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "38"
+    "pickup_community_area": "38",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0038",
@@ -465,7 +503,8 @@
     "trip_total": "16",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "39"
+    "pickup_community_area": "39",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0039",
@@ -477,7 +516,8 @@
     "trip_total": "18",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "40"
+    "pickup_community_area": "40",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0040",
@@ -489,7 +529,8 @@
     "trip_total": "20",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "41"
+    "pickup_community_area": "41",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0041",
@@ -501,7 +542,8 @@
     "trip_total": "22",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "42"
+    "pickup_community_area": "42",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0042",
@@ -513,7 +555,8 @@
     "trip_total": "18",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "43"
+    "pickup_community_area": "43",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0043",
@@ -525,7 +568,8 @@
     "trip_total": "20",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "44"
+    "pickup_community_area": "44",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0044",
@@ -537,7 +581,8 @@
     "trip_total": "22",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "45"
+    "pickup_community_area": "45",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0045",
@@ -549,7 +594,8 @@
     "trip_total": "24",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "46"
+    "pickup_community_area": "46",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0046",
@@ -561,7 +607,8 @@
     "trip_total": "26",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "47"
+    "pickup_community_area": "47",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0047",
@@ -573,7 +620,8 @@
     "trip_total": "28",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "48"
+    "pickup_community_area": "48",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0048",
@@ -585,7 +633,8 @@
     "trip_total": "24",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "49"
+    "pickup_community_area": "49",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0049",
@@ -597,7 +646,8 @@
     "trip_total": "26",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "50"
+    "pickup_community_area": "50",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0050",
@@ -609,7 +659,8 @@
     "trip_total": "28",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "51"
+    "pickup_community_area": "51",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0051",
@@ -621,7 +672,8 @@
     "trip_total": "13",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "52"
+    "pickup_community_area": "52",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0052",
@@ -633,7 +685,8 @@
     "trip_total": "15",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "53"
+    "pickup_community_area": "53",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0053",
@@ -645,7 +698,8 @@
     "trip_total": "17",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "54"
+    "pickup_community_area": "54",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0054",
@@ -657,7 +711,8 @@
     "trip_total": "13",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "55"
+    "pickup_community_area": "55",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0055",
@@ -669,7 +724,8 @@
     "trip_total": "15",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "56"
+    "pickup_community_area": "56",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0056",
@@ -681,7 +737,8 @@
     "trip_total": "17",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "57"
+    "pickup_community_area": "57",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0057",
@@ -693,7 +750,8 @@
     "trip_total": "19",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "58"
+    "pickup_community_area": "58",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0058",
@@ -705,7 +763,8 @@
     "trip_total": "21",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "59"
+    "pickup_community_area": "59",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0059",
@@ -717,7 +776,8 @@
     "trip_total": "23",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "60"
+    "pickup_community_area": "60",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0060",
@@ -729,7 +789,8 @@
     "trip_total": "19",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "61"
+    "pickup_community_area": "61",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0061",
@@ -741,7 +802,8 @@
     "trip_total": "21",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "62"
+    "pickup_community_area": "62",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0062",
@@ -753,7 +815,8 @@
     "trip_total": "23",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "63"
+    "pickup_community_area": "63",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0063",
@@ -765,7 +828,8 @@
     "trip_total": "25",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "64"
+    "pickup_community_area": "64",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0064",
@@ -777,7 +841,8 @@
     "trip_total": "27",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "65"
+    "pickup_community_area": "65",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0065",
@@ -789,7 +854,8 @@
     "trip_total": "29",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "66"
+    "pickup_community_area": "66",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0066",
@@ -801,7 +867,8 @@
     "trip_total": "25",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "67"
+    "pickup_community_area": "67",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0067",
@@ -813,7 +880,8 @@
     "trip_total": "27",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "68"
+    "pickup_community_area": "68",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0068",
@@ -825,7 +893,8 @@
     "trip_total": "12",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "69"
+    "pickup_community_area": "69",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0069",
@@ -837,7 +906,8 @@
     "trip_total": "14",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "70"
+    "pickup_community_area": "70",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0070",
@@ -849,7 +919,8 @@
     "trip_total": "16",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "71"
+    "pickup_community_area": "71",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0071",
@@ -861,7 +932,8 @@
     "trip_total": "18",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "72"
+    "pickup_community_area": "72",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0072",
@@ -873,7 +945,8 @@
     "trip_total": "14",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "73"
+    "pickup_community_area": "73",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0073",
@@ -885,7 +958,8 @@
     "trip_total": "16",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "74"
+    "pickup_community_area": "74",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0074",
@@ -897,7 +971,8 @@
     "trip_total": "18",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "75"
+    "pickup_community_area": "75",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0075",
@@ -909,7 +984,8 @@
     "trip_total": "20",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "76"
+    "pickup_community_area": "76",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0076",
@@ -921,7 +997,8 @@
     "trip_total": "22",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "77"
+    "pickup_community_area": "77",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0077",
@@ -933,7 +1010,8 @@
     "trip_total": "24",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "1"
+    "pickup_community_area": "1",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0078",
@@ -945,7 +1023,8 @@
     "trip_total": "20",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "2"
+    "pickup_community_area": "2",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0079",
@@ -957,7 +1036,8 @@
     "trip_total": "22",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "3"
+    "pickup_community_area": "3",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0080",
@@ -969,7 +1049,8 @@
     "trip_total": "24",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "4"
+    "pickup_community_area": "4",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0081",
@@ -981,7 +1062,8 @@
     "trip_total": "26",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "5"
+    "pickup_community_area": "5",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0082",
@@ -993,7 +1075,8 @@
     "trip_total": "28",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "6"
+    "pickup_community_area": "6",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0083",
@@ -1005,7 +1088,8 @@
     "trip_total": "30",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "7"
+    "pickup_community_area": "7",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0084",
@@ -1017,7 +1101,8 @@
     "trip_total": "26",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "8"
+    "pickup_community_area": "8",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0085",
@@ -1029,7 +1114,8 @@
     "trip_total": "11",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "9"
+    "pickup_community_area": "9",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0086",
@@ -1041,7 +1127,8 @@
     "trip_total": "13",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "10"
+    "pickup_community_area": "10",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0087",
@@ -1053,7 +1140,8 @@
     "trip_total": "15",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "11"
+    "pickup_community_area": "11",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0088",
@@ -1065,7 +1153,8 @@
     "trip_total": "17",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "12"
+    "pickup_community_area": "12",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0089",
@@ -1077,7 +1166,8 @@
     "trip_total": "19",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "13"
+    "pickup_community_area": "13",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0090",
@@ -1089,7 +1179,8 @@
     "trip_total": "15",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "14"
+    "pickup_community_area": "14",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0091",
@@ -1101,7 +1192,8 @@
     "trip_total": "17",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "15"
+    "pickup_community_area": "15",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0092",
@@ -1113,7 +1205,8 @@
     "trip_total": "19",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "16"
+    "pickup_community_area": "16",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0093",
@@ -1125,7 +1218,8 @@
     "trip_total": "21",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "17"
+    "pickup_community_area": "17",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0094",
@@ -1137,7 +1231,8 @@
     "trip_total": "23",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "18"
+    "pickup_community_area": "18",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0095",
@@ -1149,7 +1244,8 @@
     "trip_total": "25",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "19"
+    "pickup_community_area": "19",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0096",
@@ -1161,7 +1257,8 @@
     "trip_total": "21",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "20"
+    "pickup_community_area": "20",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0097",
@@ -1173,7 +1270,8 @@
     "trip_total": "23",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "21"
+    "pickup_community_area": "21",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0098",
@@ -1185,7 +1283,8 @@
     "trip_total": "25",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "22"
+    "pickup_community_area": "22",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0099",
@@ -1197,7 +1296,8 @@
     "trip_total": "27",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "23"
+    "pickup_community_area": "23",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0100",
@@ -1209,7 +1309,8 @@
     "trip_total": "29",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "24"
+    "pickup_community_area": "24",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0101",
@@ -1221,7 +1322,8 @@
     "trip_total": "31",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "25"
+    "pickup_community_area": "25",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0102",
@@ -1233,7 +1335,8 @@
     "trip_total": "10",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "26"
+    "pickup_community_area": "26",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0103",
@@ -1245,7 +1348,8 @@
     "trip_total": "12",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "27"
+    "pickup_community_area": "27",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0104",
@@ -1257,7 +1361,8 @@
     "trip_total": "14",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "28"
+    "pickup_community_area": "28",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0105",
@@ -1269,7 +1374,8 @@
     "trip_total": "16",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "29"
+    "pickup_community_area": "29",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0106",
@@ -1281,7 +1387,8 @@
     "trip_total": "18",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "30"
+    "pickup_community_area": "30",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0107",
@@ -1293,7 +1400,8 @@
     "trip_total": "20",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "31"
+    "pickup_community_area": "31",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0108",
@@ -1305,7 +1413,8 @@
     "trip_total": "16",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "32"
+    "pickup_community_area": "32",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0109",
@@ -1317,7 +1426,8 @@
     "trip_total": "18",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "33"
+    "pickup_community_area": "33",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0110",
@@ -1329,7 +1439,8 @@
     "trip_total": "20",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "34"
+    "pickup_community_area": "34",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0111",
@@ -1341,7 +1452,8 @@
     "trip_total": "22",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "35"
+    "pickup_community_area": "35",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0112",
@@ -1353,7 +1465,8 @@
     "trip_total": "24",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "36"
+    "pickup_community_area": "36",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0113",
@@ -1365,7 +1478,8 @@
     "trip_total": "26",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "37"
+    "pickup_community_area": "37",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "sample-0114",
@@ -1377,7 +1491,8 @@
     "trip_total": "22",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "38"
+    "pickup_community_area": "38",
+    "taxi_id": "sample-taxi-0"
   },
   {
     "trip_id": "sample-0115",
@@ -1389,7 +1504,8 @@
     "trip_total": "24",
     "payment_type": "Credit Card",
     "company": "Sample B",
-    "pickup_community_area": "39"
+    "pickup_community_area": "39",
+    "taxi_id": "sample-taxi-1"
   },
   {
     "trip_id": "sample-0116",
@@ -1401,7 +1517,8 @@
     "trip_total": "26",
     "payment_type": "Mobile",
     "company": "Sample A",
-    "pickup_community_area": "40"
+    "pickup_community_area": "40",
+    "taxi_id": "sample-taxi-2"
   },
   {
     "trip_id": "sample-0117",
@@ -1413,7 +1530,8 @@
     "trip_total": "28",
     "payment_type": "Cash",
     "company": "Sample B",
-    "pickup_community_area": "41"
+    "pickup_community_area": "41",
+    "taxi_id": "sample-taxi-3"
   },
   {
     "trip_id": "sample-0118",
@@ -1425,7 +1543,8 @@
     "trip_total": "30",
     "payment_type": "Credit Card",
     "company": "Sample A",
-    "pickup_community_area": "42"
+    "pickup_community_area": "42",
+    "taxi_id": "sample-taxi-4"
   },
   {
     "trip_id": "sample-0119",
@@ -1437,7 +1556,8 @@
     "trip_total": "15",
     "payment_type": "Mobile",
     "company": "Sample B",
-    "pickup_community_area": "43"
+    "pickup_community_area": "43",
+    "taxi_id": "sample-taxi-5"
   },
   {
     "trip_id": "invalid-trip",
@@ -1449,6 +1569,7 @@
     "trip_total": "-4",
     "payment_type": "Cash",
     "company": "Sample A",
-    "pickup_community_area": "1"
+    "pickup_community_area": "1",
+    "taxi_id": "sample-taxi-0"
   }
 ]
