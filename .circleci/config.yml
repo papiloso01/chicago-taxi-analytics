@@ -1,0 +1,68 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/python:3.11
+      - image: postgres:16
+        environment:
+          POSTGRES_USER: taxi
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: taxi
+    environment:
+      DATABASE_URL: postgresql://taxi:testpassword@localhost:5432/taxi
+      POSTGRES_USER: taxi
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: taxi
+      DB_HOST: localhost
+      DBT_PROFILES_DIR: ./dbt
+    steps:
+      - checkout
+      - run:
+          name: Install pipeline and dbt dependencies
+          command: python -m pip install '.[transform]'
+      - run:
+          name: Wait for PostgreSQL
+          command: |
+            python - <<'PY'
+            import os
+            import time
+            import psycopg
+
+            deadline = time.monotonic() + 60
+            while True:
+                try:
+                    with psycopg.connect(os.environ["DATABASE_URL"], connect_timeout=3) as conn:
+                        conn.execute("SELECT 1")
+                    print("PostgreSQL is ready")
+                    break
+                except psycopg.OperationalError:
+                    if time.monotonic() >= deadline:
+                        raise
+                    time.sleep(2)
+            PY
+      - run:
+          name: Run ingestion unit tests
+          command: python -m unittest discover -s tests -v
+      - run:
+          name: Load sample data and replay to check idempotency
+          command: |
+            taxi-pipeline --sample data/sample/trips.json --start 2024-01-01 --end 2024-01-04
+            taxi-pipeline --sample data/sample/trips.json --start 2024-01-01 --end 2024-01-04
+      - run:
+          name: Build dbt models and run data quality tests
+          command: dbt build --project-dir dbt
+      - run:
+          name: Verify duplicate prevention and quarantine
+          command: python tests/check_database.py
+      - store_artifacts:
+          path: dbt/logs
+          destination: dbt-logs
+      - store_artifacts:
+          path: dbt/target
+          destination: dbt-results
+
+workflows:
+  test-pipeline:
+    jobs:
+      - test
