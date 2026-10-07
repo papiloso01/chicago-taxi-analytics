@@ -1,5 +1,4 @@
 name: Tests and pipeline smoke test
-on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -10,10 +9,10 @@ jobs:
           POSTGRES_USER: taxi
           POSTGRES_PASSWORD: testpassword
           POSTGRES_DB: taxi
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd "pg_isready -U taxi" --health-interval 5s
-          --health-timeout 5s --health-retries 10
+        ports:
+        - 5432:5432
+        options: --health-cmd "pg_isready -U taxi" --health-interval 5s --health-timeout
+          5s --health-retries 10
     env:
       DATABASE_URL: postgresql://taxi:testpassword@localhost:5432/taxi
       POSTGRES_USER: taxi
@@ -21,14 +20,28 @@ jobs:
       POSTGRES_DB: taxi
       DB_HOST: localhost
       DBT_PROFILES_DIR: ./dbt
+      JDBC_URL: jdbc:postgresql://localhost:5432/taxi
+      PYSPARK_SUBMIT_ARGS: --jars /tmp/postgresql.jar pyspark-shell
+      SPARK_LOCAL_IP: 127.0.0.1
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - run: pip install '.[transform]'
-      - run: python -m unittest discover -s tests -v
-      - run: taxi-pipeline --sample data/sample/trips.json --start 2024-01-01 --end 2024-01-04
-      - run: taxi-pipeline --sample data/sample/trips.json --start 2024-01-01 --end 2024-01-04
-      - run: dbt build --project-dir dbt
-      - run: python tests/check_database.py
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '17'
+    - run: curl -fsSL https://repo.maven.apache.org/maven2/org/postgresql/postgresql/42.7.5/postgresql-42.7.5.jar
+        -o /tmp/postgresql.jar
+    - run: pip install '.[spark]'
+    - run: python -m unittest discover -s tests -v
+    - run: python tests/integration_ingestion.py
+    - run: python scripts/run_warehouse.py
+    - run: python tests/check_warehouse.py
+    - run: 'python scripts/run_warehouse.py
+
+        python tests/check_warehouse.py'
+'on':
+- push
+- pull_request

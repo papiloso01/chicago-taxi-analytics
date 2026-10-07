@@ -7,12 +7,13 @@ name = "taxi-analytics"
 version = "1.0.0"
 description = "API-to-dashboard Chicago taxi analytics pipeline"
 requires-python = ">=3.11"
-dependencies = ["psycopg[binary]>=3.2,<4"]
+dependencies = ["psycopg[binary]>=3.2,<4", "tzdata>=2024.1"]
 
 [project.optional-dependencies]
 dashboard = ["streamlit>=1.40,<2", "pandas>=2.2,<3"]
 transform = ["dbt-postgres>=1.9,<2"]
 spark = ["pyspark==3.5.6"]
+test = ["unittest-xml-reporting>=3.2,<4"]
 
 [project.scripts]
 taxi-pipeline = "taxi_pipeline.cli:main"
