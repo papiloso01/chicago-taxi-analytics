@@ -52,6 +52,26 @@ jobs:
         command: 'python scripts/run_warehouse.py
 
           python tests/check_warehouse.py'
+    - run:
+        name: Test weather/community ingestion and enrichment end-to-end
+        command: 'python -m taxi_pipeline.enrichment --sample data/sample/enrichment.json
+          --start 2024-01-01 --end 2024-01-04
+
+          python -m taxi_pipeline.enrichment --sample data/sample/enrichment.json
+          --start 2024-01-01 --end 2024-01-04
+
+          python scripts/run_enrichment.py
+
+          python tests/check_enrichment.py
+
+          python scripts/run_enrichment.py
+
+          python tests/check_enrichment.py
+
+          python scripts/export_enrichment.py'
+    - store_artifacts:
+        path: data/exports
+        destination: synthetic-enrichment-preview
     - store_artifacts:
         path: docs
         destination: warehouse-design

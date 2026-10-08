@@ -42,6 +42,22 @@ jobs:
     - run: 'python scripts/run_warehouse.py
 
         python tests/check_warehouse.py'
+    - name: Enrichment ingestion, joins, export and replay checks
+      run: 'python -m taxi_pipeline.enrichment --sample data/sample/enrichment.json
+        --start 2024-01-01 --end 2024-01-04
+
+        python -m taxi_pipeline.enrichment --sample data/sample/enrichment.json --start
+        2024-01-01 --end 2024-01-04
+
+        python scripts/run_enrichment.py
+
+        python tests/check_enrichment.py
+
+        python scripts/run_enrichment.py
+
+        python tests/check_enrichment.py
+
+        python scripts/export_enrichment.py'
 'on':
 - push
 - pull_request
