@@ -10,3 +10,4 @@ dbt/logs/
 dbt/dbt_packages/
 .sparkStaging/
 dbt/.user.yml
+data/exports/

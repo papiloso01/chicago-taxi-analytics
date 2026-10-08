@@ -11,3 +11,12 @@ sample:
 run:
 	docker compose run --rm pipeline
 	docker compose run --rm pipeline python scripts/run_warehouse.py
+
+# Run after the base warehouse has been built.
+enrich-sample:
+	docker compose run --rm pipeline python -m taxi_pipeline.enrichment --sample data/sample/enrichment.json --start 2024-01-01 --end 2024-01-04
+	docker compose run --rm pipeline python scripts/run_enrichment.py
+
+enrich:
+	docker compose run --rm pipeline python -m taxi_pipeline.enrichment
+	docker compose run --rm pipeline python scripts/run_enrichment.py

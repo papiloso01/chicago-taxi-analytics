@@ -76,3 +76,7 @@ CircleCI runs the sample test pipeline after the repository is connected to a Ci
 ## Sources and limits
 
 [Chicago Taxi Trips](https://catalog.data.gov/dataset/taxi-trips-2024) has medallion-level taxi IDs, not driver identities or passenger gender. Rank taxis by reported gross totals, not driver net income. Reported trip miles are converted to kilometres; this does not reconstruct road geometry. Shortest-trip reporting excludes zero distance while preserving those rows for inspection. Source data retains provider terms; code is MIT licensed.
+
+## Weather and neighbourhood enrichment
+
+See [Chicago Moves enrichment](docs/enrichment.md) for additional sources, safe community/weather joins, map exports and the independent weather catch-up window. Run `make enrich-sample` after the sample warehouse to preview synthetic enrichment data.
