@@ -1,4 +1,5 @@
-# Chicago Taxi Analytics: bronze → silver → gold
+# Chicago Taxi Analytics Data Warehouse: bronze → silver → gold (reporting layer)
+<img width="1469" height="856" alt="for git2" src="https://github.com/user-attachments/assets/abc76088-9876-4fc9-afb2-307c604cb4df" />
 
 **Review revision:** Python API ingestion → PostgreSQL bronze → PySpark silver warehouse → gold marts → Tableau/Power BI.
 
