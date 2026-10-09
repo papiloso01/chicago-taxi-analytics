@@ -4,7 +4,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   pipeline:
-    if: vars.ENABLE_DAILY_PIPELINE == 'true'
+    if: vars.ENABLE_DAILY_PIPELINE == 'true' && vars.WAREHOUSE_TARGET == 'postgres'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:

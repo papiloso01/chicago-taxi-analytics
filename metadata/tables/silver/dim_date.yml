@@ -1,0 +1,29 @@
+version: 1
+table: silver.dim_date
+description: Dim date.
+grain: One row per trip_date.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_date
+partition_by:
+- trip_date
+upstream:
+- bronze.taxi_trip_raw
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: trip_date
+  type: date
+  nullable: false
+  description: Chicago local calendar date.
+- name: year
+  type: int
+  nullable: true
+  description: Year at this table grain.
+- name: month
+  type: int
+  nullable: true
+  description: Month at this table grain.
+- name: day_of_week
+  type: int
+  nullable: true
+  description: Day of week at this table grain.

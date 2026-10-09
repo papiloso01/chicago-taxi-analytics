@@ -1,0 +1,9 @@
+name: chicago_taxi
+description: City of Chicago taxi trips API.
+endpoint: https://data.cityofchicago.org/resource/ajtu-isnz.json
+natural_key: trip_id
+timezone: America/Chicago
+initial_load: Completed calendar year
+daily_window: T-1; inclusive start, exclusive end
+freshness: T-1 is the requested window, not a source delivery guarantee; monitor lag
+  and backfill late arrivals

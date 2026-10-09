@@ -1,0 +1,6 @@
+name: community_areas
+description: Current Chicago 77 community-area polygons; historical boundaries are
+  not versioned by effective date.
+endpoint: https://data.cityofchicago.org/resource/igwz-8jzy.json
+natural_key: area_num_1
+refresh: Complete snapshot per run

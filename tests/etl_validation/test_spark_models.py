@@ -2,7 +2,7 @@ import json
 import unittest
 from decimal import Decimal
 from pyspark.sql import SparkSession
-from taxi_pipeline.spark_models import build_models
+from chicago_taxi.transformations.models import build_models
 
 class SparkTests(unittest.TestCase):
     @classmethod

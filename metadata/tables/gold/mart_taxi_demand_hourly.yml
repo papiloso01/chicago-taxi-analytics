@@ -1,0 +1,30 @@
+version: 1
+table: gold.mart_taxi_demand_hourly
+description: Mart taxi demand hourly.
+grain: One row per trip_date, trip_hour.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_date
+- trip_hour
+partition_by:
+- trip_date
+upstream:
+- silver.fact_taxi_trip
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: trip_date
+  type: date
+  nullable: false
+  description: Chicago local calendar date.
+- name: trip_hour
+  type: int
+  nullable: false
+  description: "Chicago local hour 0\u201323."
+- name: trips
+  type: bigint
+  nullable: true
+  description: Trip count at this table grain.
+- name: revenue_usd
+  type: decimal(30,6)
+  nullable: true
+  description: Sum of reported trip charges in USD; not profit.

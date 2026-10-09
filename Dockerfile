@@ -5,7 +5,7 @@ ENV PYSPARK_SUBMIT_ARGS="--jars /opt/jdbc/postgresql.jar pyspark-shell"
 WORKDIR /app
 COPY pyproject.toml ./
 COPY src ./src
-RUN pip install --no-cache-dir '.[dashboard,transform,spark]'
+RUN pip install --no-cache-dir '.[dashboard,transform,spark,lake]'
 COPY . .
 ENV DBT_PROFILES_DIR=/app/dbt
 CMD ["taxi-pipeline"]

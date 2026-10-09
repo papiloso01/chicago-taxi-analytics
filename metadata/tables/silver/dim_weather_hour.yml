@@ -1,0 +1,37 @@
+version: 1
+table: silver.dim_weather_hour
+description: Dim weather hour.
+grain: One row per weather_local_hour.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- weather_local_hour
+partition_by: []
+upstream:
+- bronze.weather_hour_raw
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: weather_local_hour
+  type: string
+  nullable: false
+  description: Chicago wall-clock hour string; repeated DST hours are flagged.
+- name: source_hours
+  type: bigint
+  nullable: true
+  description: Number of UTC source hours mapping to this local hour.
+- name: temperature_c
+  type: double
+  nullable: true
+  description: City-level ERA5 temperature in Celsius.
+- name: precipitation_mm
+  type: double
+  nullable: true
+  description: City-level ERA5 hourly precipitation in millimetres; never sum duplicated
+    trip-level weather.
+- name: snowfall_cm
+  type: double
+  nullable: true
+  description: City-level ERA5 hourly snowfall in centimetres.
+- name: weather_ambiguous
+  type: boolean
+  nullable: true
+  description: True when multiple UTC hours map to the same local hour.

@@ -1,0 +1,33 @@
+version: 1
+table: bronze.taxi_trip_raw
+description: Taxi trip raw.
+grain: One row per record_id.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- record_id
+partition_by: []
+upstream:
+- source.chicago_taxi
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: record_id
+  type: string
+  nullable: false
+  description: Source natural key; trip ID, community ID or UTC weather hour.
+- name: payload
+  type: string
+  nullable: false
+  description: Original source record encoded as JSON; measures are not coerced in
+    bronze.
+- name: ingested_at_utc
+  type: string
+  nullable: false
+  description: UTC ingestion timestamp in ISO 8601 text.
+- name: run_id
+  type: string
+  nullable: false
+  description: Immutable ingestion run identifier.
+- name: sequence
+  type: bigint
+  nullable: false
+  description: Order within the source extraction; used to resolve repeated keys.

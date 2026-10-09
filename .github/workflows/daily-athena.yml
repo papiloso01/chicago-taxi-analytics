@@ -1,0 +1,63 @@
+name: Daily Athena lake pipeline
+on:
+  schedule:
+    - cron: '30 6 * * *'
+  workflow_dispatch:
+    inputs:
+      year:
+        description: Completed calendar year for backfill (blank = Chicago T-1)
+        required: false
+      start:
+        description: Optional inclusive start YYYY-MM-DD
+        required: false
+      end:
+        description: Optional exclusive end YYYY-MM-DD
+        required: false
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: taxi-production-pipeline
+  cancel-in-progress: false
+jobs:
+  lake:
+    if: vars.ENABLE_DAILY_PIPELINE == 'true' && vars.WAREHOUSE_TARGET == 'athena' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      LAKE_BUCKET: ${{ vars.LAKE_BUCKET }}
+      LAKE_PREFIX: chicago_taxi
+      GLUE_DATABASE_PREFIX: ${{ vars.GLUE_DATABASE_PREFIX }}
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      SOCRATA_APP_TOKEN: ${{ secrets.SOCRATA_APP_TOKEN }}
+      START_DATE: ${{ inputs.start }}
+      END_DATE: ${{ inputs.end }}
+      BACKFILL_YEAR: ${{ inputs.year }}
+      SPARK_LOCAL_IP: 127.0.0.1
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+      - run: pip install '.[spark,lake]'
+      - name: Extract and publish validated lake snapshot
+        run: |
+          if [ -n "$BACKFILL_YEAR" ]; then
+            python pipelines/run_lake.py --year "$BACKFILL_YEAR" --publish
+          else
+            python pipelines/run_lake.py --publish
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: lake-run-audit
+          path: data/lake/snapshots/*/audit.json
+          if-no-files-found: ignore

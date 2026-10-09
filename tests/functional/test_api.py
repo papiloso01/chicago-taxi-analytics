@@ -1,6 +1,6 @@
 import unittest
 from urllib.parse import urlparse, parse_qs
-from taxi_pipeline.api import pages
+from chicago_taxi.ingestion.taxi_api import pages
 
 class ApiTests(unittest.TestCase):
     def test_keyset_pagination(self):

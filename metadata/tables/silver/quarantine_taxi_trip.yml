@@ -1,0 +1,69 @@
+version: 1
+table: silver.quarantine_taxi_trip
+description: Quarantine taxi trip.
+grain: One row per trip_id.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_id
+partition_by: []
+upstream:
+- bronze.taxi_trip_raw
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: trip_id
+  type: string
+  nullable: false
+  description: Unique source trip identifier.
+- name: taxi_id
+  type: string
+  nullable: true
+  description: Anonymised vehicle identifier; not a driver identity.
+- name: trip_start_timestamp
+  type: string
+  nullable: true
+  description: Trip start timestamp at this table grain.
+- name: trip_duration_seconds
+  type: decimal(20,6)
+  nullable: true
+  description: Reported trip duration in seconds.
+- name: trip_distance_miles
+  type: decimal(20,6)
+  nullable: true
+  description: Reported trip distance in miles.
+- name: fare_usd
+  type: decimal(20,6)
+  nullable: true
+  description: Reported fare in USD.
+- name: tips_usd
+  type: decimal(20,6)
+  nullable: true
+  description: Reported tips in USD; missing values stay null.
+- name: trip_total_usd
+  type: decimal(20,6)
+  nullable: true
+  description: Reported total trip charge in USD; not driver profit.
+- name: payment_type
+  type: string
+  nullable: true
+  description: Source payment category with Unknown fallback.
+- name: company
+  type: string
+  nullable: true
+  description: Source company label with Unknown fallback.
+- name: pickup_community_area
+  type: string
+  nullable: true
+  description: Source or enriched pickup community area; Unknown/null when unavailable.
+- name: dropoff_community_area
+  type: string
+  nullable: true
+  description: Source or enriched dropoff community area; Unknown/null when unavailable.
+- name: started_at
+  type: string
+  nullable: true
+  description: Chicago local trip start as text; rounded source time, no inferred
+    UTC offset.
+- name: rejection_reason
+  type: string
+  nullable: true
+  description: Semicolon-separated validation failure reasons.

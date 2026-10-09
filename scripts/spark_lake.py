@@ -1,7 +1,7 @@
 """Optional Spark lake export of raw database data using partitioned JDBC reads.
 Requires Java 17, pip install '.[spark]', PostgreSQL JDBC JAR and a completed API load.
 Example: spark-submit --jars /path/postgresql.jar scripts/spark_lake.py
-This extra path does not replace the dbt reporting pipeline.
+Legacy raw-database export; the native Athena workflow is pipelines/run_lake.py.
 """
 import os
 from pyspark.sql import SparkSession, functions as F
@@ -15,5 +15,5 @@ raw = (spark.read.format("jdbc").option("url",os.environ["JDBC_URL"])
        .option("numPartitions",16).option("fetchsize",10000).load())
 (raw.withColumn("trip_date",F.substring(F.get_json_object("payload","$.trip_start_timestamp"),1,10))
     .drop("bucket").write.mode("overwrite").partitionBy("trip_date")
-    .parquet(os.getenv("LAKE_PATH","data/lake/bronze")))
+    .parquet(os.getenv("LAKE_PATH","data/legacy_lake/bronze")))
 spark.stop()

@@ -1,0 +1,37 @@
+version: 1
+table: gold.mart_taxi_demand_daily
+description: Mart taxi demand daily.
+grain: One row per trip_date.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_date
+partition_by:
+- trip_date
+upstream:
+- silver.fact_taxi_trip
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: trip_date
+  type: date
+  nullable: false
+  description: Chicago local calendar date.
+- name: trips
+  type: bigint
+  nullable: true
+  description: Trip count at this table grain.
+- name: revenue_usd
+  type: decimal(30,6)
+  nullable: true
+  description: Sum of reported trip charges in USD; not profit.
+- name: tips_usd
+  type: decimal(30,6)
+  nullable: true
+  description: Reported tips in USD; missing values stay null.
+- name: average_distance_km
+  type: decimal(28,10)
+  nullable: true
+  description: Mean distance km at this reporting grain.
+- name: average_trip_usd
+  type: decimal(24,10)
+  nullable: true
+  description: Mean trip usd at this reporting grain.

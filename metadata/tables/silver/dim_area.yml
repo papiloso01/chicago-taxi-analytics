@@ -1,0 +1,20 @@
+version: 1
+table: silver.dim_area
+description: Dim area.
+grain: One row per area_key.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- area_key
+partition_by: []
+upstream:
+- bronze.taxi_trip_raw
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: area
+  type: string
+  nullable: true
+  description: Area at this table grain.
+- name: area_key
+  type: string
+  nullable: false
+  description: Stable SHA-256 warehouse key for area.

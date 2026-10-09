@@ -1,0 +1,10 @@
+name: open_meteo
+description: Open-Meteo ERA5 city-level modelled hourly weather.
+endpoint: https://archive-api.open-meteo.com/v1/archive
+natural_key: hour_utc
+timezone: UTC source / America/Chicago reporting
+daily_window: 14-day overlap ending five days before Chicago today
+units:
+  temperature: Celsius
+  precipitation: mm
+  snowfall: cm

@@ -1,6 +1,82 @@
 version: 2.1
 jobs:
-  test:
+  functional:
+    docker: &id001
+    - image: cimg/python:3.11
+    environment: &id002
+      SPARK_LOCAL_IP: 127.0.0.1
+      JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+    resource_class: medium
+    steps:
+    - checkout
+    - &id003
+      run:
+        name: Install Java and test dependencies
+        command: 'sudo apt-get update
+
+          sudo apt-get install -y openjdk-17-jre-headless
+
+          python -m pip install ''.[spark,lake,test]'''
+    - run:
+        name: Functional
+        command: 'python -m ruff check src pipelines tools tests
+
+          python tools/validate_metadata.py
+
+          cfn-lint infrastructure/aws/athena.yml
+
+          python -m pytest tests/functional -v --junitxml=test-results/functional.xml'
+    - store_test_results:
+        path: test-results
+    - store_artifacts:
+        path: test-results
+        destination: functional
+  integration:
+    docker: *id001
+    environment: *id002
+    resource_class: medium
+    steps:
+    - checkout
+    - *id003
+    - run:
+        name: Integration
+        command: python -m pytest tests/integration -v --junitxml=test-results/integration.xml
+    - store_test_results:
+        path: test-results
+    - store_artifacts:
+        path: test-results
+        destination: integration
+  etl_validation:
+    docker: *id001
+    environment: *id002
+    resource_class: medium
+    steps:
+    - checkout
+    - *id003
+    - run:
+        name: Etl Validation
+        command: python -m pytest tests/etl_validation -v --junitxml=test-results/etl_validation.xml
+    - store_test_results:
+        path: test-results
+    - store_artifacts:
+        path: test-results
+        destination: etl_validation
+  e2e:
+    docker: *id001
+    environment: *id002
+    resource_class: medium
+    steps:
+    - checkout
+    - *id003
+    - run:
+        name: E2E
+        command: python -m pytest tests/e2e -v --junitxml=test-results/e2e.xml
+    - store_test_results:
+        path: test-results
+    - store_artifacts:
+        path: test-results
+        destination: e2e
+  postgres_compatibility:
     docker:
     - image: cimg/python:3.11
     - image: postgres:16
@@ -36,22 +112,19 @@ jobs:
         name: Wait for PostgreSQL
         command: python scripts/wait_database.py
     - run:
-        name: Run API, date-window and Spark unit tests
-        command: python -m xmlrunner discover -s tests -v -o test-results
-    - run:
         name: Test ingestion, replay and failure audit
-        command: python tests/integration_ingestion.py
+        command: python tests/integration/integration_ingestion.py
     - run:
         name: Transform bronze to silver and gold
         command: python scripts/run_warehouse.py
     - run:
         name: Reconcile all layers and dimension joins
-        command: python tests/check_warehouse.py
+        command: python tests/etl_validation/check_warehouse.py
     - run:
         name: Replay warehouse and verify consistent results
         command: 'python scripts/run_warehouse.py
 
-          python tests/check_warehouse.py'
+          python tests/etl_validation/check_warehouse.py'
     - run:
         name: Test weather/community ingestion and enrichment end-to-end
         command: 'python -m taxi_pipeline.enrichment --sample data/sample/enrichment.json
@@ -62,11 +135,11 @@ jobs:
 
           python scripts/run_enrichment.py
 
-          python tests/check_enrichment.py
+          python tests/etl_validation/check_enrichment.py
 
           python scripts/run_enrichment.py
 
-          python tests/check_enrichment.py
+          python tests/etl_validation/check_enrichment.py
 
           python scripts/export_enrichment.py'
     - store_artifacts:
@@ -82,6 +155,19 @@ jobs:
         destination: unit-test-results
     resource_class: medium
 workflows:
-  test-pipeline:
+  validate_platform:
     jobs:
-    - test
+    - functional
+    - integration:
+        requires:
+        - functional
+    - etl_validation:
+        requires:
+        - functional
+    - e2e:
+        requires:
+        - integration
+        - etl_validation
+    - postgres_compatibility:
+        requires:
+        - functional

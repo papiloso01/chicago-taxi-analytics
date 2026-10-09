@@ -1,2 +1,2 @@
-from taxi_pipeline.spark_job import run
+from chicago_taxi.publishing.postgres_warehouse import run
 run()

@@ -1,0 +1,20 @@
+version: 1
+table: silver.dim_taxi
+description: Dim taxi.
+grain: One row per taxi_key.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- taxi_key
+partition_by: []
+upstream:
+- bronze.taxi_trip_raw
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: taxi_id
+  type: string
+  nullable: true
+  description: Anonymised vehicle identifier; not a driver identity.
+- name: taxi_key
+  type: string
+  nullable: false
+  description: Stable SHA-256 warehouse key for taxi.

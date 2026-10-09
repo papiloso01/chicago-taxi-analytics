@@ -1,0 +1,41 @@
+version: 1
+table: gold.mart_taxi_trip_distance
+description: Mart taxi trip distance.
+grain: One row per trip_id.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_id
+partition_by:
+- trip_date
+upstream:
+- silver.fact_taxi_trip
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: trip_id
+  type: string
+  nullable: false
+  description: Unique source trip identifier.
+- name: trip_date
+  type: date
+  nullable: true
+  description: Chicago local calendar date.
+- name: taxi_id
+  type: string
+  nullable: true
+  description: Anonymised vehicle identifier; not a driver identity.
+- name: trip_distance_km
+  type: decimal(24,6)
+  nullable: true
+  description: Reported miles multiplied by 1.609344; not a reconstructed road route.
+- name: pickup_community_area
+  type: string
+  nullable: true
+  description: Source or enriched pickup community area; Unknown/null when unavailable.
+- name: dropoff_community_area
+  type: string
+  nullable: true
+  description: Source or enriched dropoff community area; Unknown/null when unavailable.
+- name: is_positive_distance
+  type: boolean
+  nullable: true
+  description: True for a reported trip distance greater than zero.

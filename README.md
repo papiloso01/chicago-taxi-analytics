@@ -1,86 +1,98 @@
-# Chicago Taxi Analytics Data Warehouse: bronze → silver → gold (reporting layer)
+# Chicago Taxi Analytics
+
+API → bronze → PySpark silver warehouse → gold reporting marts → S3 / Glue / Athena → Tableau.
 
 <img width="1200" height="850" alt="Chicago Taxi Analytics - Synthetic Sample Data" src="https://github.com/user-attachments/assets/19e7f4aa-863b-477e-9244-a11f19f1193f" />
 
+The screenshot is a synthetic Tableau development preview, not verified live business reporting.
 
+## Start locally
 
-**Review revision:** Python API ingestion → PostgreSQL bronze → PySpark silver warehouse → gold marts → Tableau/Power BI.
+Requires Python 3.11 and Java 17. From the repo root (Windows CMD):
 
-This branch replaces the active dbt reporting path with explicit PySpark source schemas, dimension joins and reporting models. Existing dbt files are retained as the earlier demo.
-
-See [reporting definitions and design](docs/reporting-design.md) before interpreting driver, route or demographic metrics.
-
-## Quick start
-
-Docker Desktop with Compose is required. Copy `.env.example` to `.env` and set a local URL-safe password. From the project root:
-
-```bash
-docker compose up -d postgres
-docker compose build
-make sample
-docker compose up -d dashboard
+```cmd
+python -m pip install -e ".[spark,lake]"
+set SPARK_LOCAL_IP=127.0.0.1
+python pipelines/run_lake.py --sample
+python pipelines/export_dashboard.py
+explorer data\exports
 ```
 
-`make sample` loads synthetic data then runs PySpark to publish silver/gold. Streamlit remains an optional preview at http://localhost:8501. The intended final BI consumer is Tableau or Power BI using the PostgreSQL gold schema. The BI workbook itself is a subsequent step.
+This runs without PostgreSQL or AWS. Source fixtures, including map polygons, are fictional.
+The existing PostgreSQL Docker commands remain available during migration:
+copy `.env.example` to `.env`, `docker compose build pipeline`, `docker compose up -d postgres`,
+then `make sample` / `make enrich-sample` where Make is available. Existing script names are compatibility entry points.
 
-## Initial one-year API load
+## Repository structure
 
-Choose a completed calendar year (example 2025), then transform:
-
-```bash
-docker compose run --rm pipeline taxi-pipeline --year 2025
-docker compose run --rm pipeline python scripts/run_warehouse.py
-```
-
-Daily operation defaults to Chicago-local yesterday; `.env.example` intentionally has no date overrides:
-
-```bash
-make run
-```
-
-An explicit start/end can repair late-arriving data. End dates are exclusive. A calendar-year backfill followed by daily ingestion needs a separate catch-up window if there is a gap. No year-long API job has been executed as part of this change.
-
-## Layers
-
-| Layer | Tables / purpose |
+| Directory | Responsibility |
 |---|---|
-| Bronze | trips JSONB and pipeline_runs ingestion audit |
-| Silver | fct_trips; dim_taxi, dim_payment, dim_company, dim_area, dim_date; quarantine_trips |
-| Gold | mart_daily, mart_hourly, mart_payment, mart_taxi_earnings, mart_trip_distances |
+| `src/chicago_taxi/ingestion/` | API pagination, retries, source/date windows and batch extraction |
+| `src/chicago_taxi/transformations/bronze/` | Replay-safe latest-record consolidation |
+| `src/chicago_taxi/transformations/silver/` | Cleaning, quarantine and warehouse facts/dimensions |
+| `src/chicago_taxi/transformations/gold/` | Reporting grains and geography/weather joins |
+| `src/chicago_taxi/schemas/` | Explicit source types and contract-backed output schemas |
+| `src/chicago_taxi/quality/` | Schema, grain, nullability, lineage and reconciliation checks |
+| `src/chicago_taxi/publishing/` | Native lake and legacy PostgreSQL adapters |
+| `pipelines/` | Run and export entry points |
+| `metadata/` | Source, table, lineage and metric contracts |
+| `tests/` | Functional, integration, ETL validation and E2E suites |
+| `infrastructure/` | Opt-in AWS template and local development notes |
+| `dashboards/tableau/` | Tableau asset documentation |
+| `tools/review/` | Advisory PR reviewer |
 
-Spark stages all warehouse outputs, validates source reconciliation and join keys, then refreshes live silver/gold tables in a single PostgreSQL transaction. Model schemas are defined with PySpark StructType and numeric casts. Hash dimension keys stay stable. Publication is a full rebuild; incremental bronze ingestion does not imply incremental silver/gold processing. Production schema changes require migrations.
+## Data and reporting
 
-## Tests
+- **Bronze:** immutable source batches, consolidated raw trip/community/weather tables and run audits.
+- **Silver:** `fact_taxi_trip`, taxi/payment/company/area/date dimensions, community polygons,
+  hourly weather and rejected trips.
+- **Gold:** daily/hourly demand, taxi revenue, trip distances, payment demand, enriched trips,
+  community-area demand and weather demand.
 
-Install Java 17 and `python -m pip install '.[spark]'`, then:
+See the generated [data dictionary](docs/data_dictionary.md) and [metric contracts](metadata/metrics/reporting.yml).
+Athena columns explicitly name USD, km and duration units. PostgreSQL names remain compatible;
+the migration map is `src/chicago_taxi/publishing/naming.py`.
+
+Initial ingestion supports a completed year; daily taxi ingestion defaults to Chicago T−1.
+Historical weather uses a separate 14-day overlap ending five days before Chicago today.
+End dates are exclusive. Silver/gold are full rebuilds, not incremental transformations.
+
+## AWS and Tableau
+
+Review [architecture](docs/architecture/athena.md) and follow [deployment/run instructions](docs/operations/athena.md).
+The AWS template creates storage, catalog, workgroup and OIDC role only when manually deployed.
+No AWS infrastructure, paid model service or live dashboard is enabled by cloning this repository.
+
+For Tableau, connect to the Athena gold database or use exported CSVs. Local exports retain
+existing filenames and field aliases for the current workbook. Modelled weather is city-level;
+missing measurements stay unavailable, and repeated DST hours are flagged.
+
+## Testing and PR review
+
+CircleCI has separate functional, integration, ETL validation, E2E and PostgreSQL compatibility jobs.
+GitHub Actions mirrors the suites. Both retain test results.
 
 ```bash
-python -m unittest discover -s tests -v
+python -m pip install -e '.[spark,lake,test]'
+python -m ruff check src pipelines tools tests
+python tools/validate_metadata.py
+python -m pytest tests/functional tests/integration tests/etl_validation tests/e2e
 ```
 
-CircleCI and GitHub Actions provision PostgreSQL 16 and a JDBC driver, then exercise:
+[Testing and AI setup](docs/operations/testing.md) explains required checks, mocked AWS coverage,
+optional API-based reviews and Copilot instructions. AI reviews are advisory; secrets/model/settings
+must be configured separately. Real AWS queries, full-year performance and Tableau connector
+validation remain deployment acceptance checks.
 
-- API keyset pagination, empty results, invalid dates/identity and stalled cursors.
-- Retryable, permanent and exhausted HTTP failure paths.
-- T−1 date boundaries, leap days and completed-year selection.
-- PySpark invalid timestamps, malformed/negative values, unknown dimensions and kilometre conversion.
-- Real bronze ingestion replay and failed-run auditing.
-- Silver trip grain, quarantine reconciliation, dimension uniqueness and fact join integrity.
-- Gold count/amount reconciliation across daily, hourly, payment and taxi marts.
-- Repeated warehouse execution with consistent outputs.
+## Source limits
 
-These cover the implemented paths, not every infrastructure failure: forced mid-publication failure, network interruptions during JDBC writes and year-scale performance are not yet covered. Do not call these large-scale benchmarks.
+Taxi IDs identify vehicles, not drivers. No passenger gender exists in the source.
+Reported trip charge is not driver profit. Miles × 1.609344 gives reported km, not road-route geometry.
+Shortest-trip reporting excludes zero distance while retaining those records.
+Area demand separates Pickup/Dropoff; summing both doubles activity counts. Never sum weather
+measurements copied onto every trip. Correlations do not establish causation.
 
-## Scheduled deployment
-
-`.github/workflows/daily.yml` executes at 06:30 UTC when `ENABLE_DAILY_PIPELINE=true`. Configure GitHub secrets DATABASE_URL, JDBC_URL, DB_HOST, POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB and optionally SOCRATA_APP_TOKEN. JDBC_URL must refer to the same database as DATABASE_URL and use the deployment's required SSL settings. The server must be reachable from the runner. T−1 requests may return no data because publishing can lag; use deliberate repair windows.
-
-CircleCI runs the sample test pipeline after the repository is connected to a CircleCI project. Test credentials are for an ephemeral CI database; never commit production secrets.
-
-## Sources and limits
-
-[Chicago Taxi Trips](https://catalog.data.gov/dataset/taxi-trips-2024) has medallion-level taxi IDs, not driver identities or passenger gender. Rank taxis by reported gross totals, not driver net income. Reported trip miles are converted to kilometres; this does not reconstruct road geometry. Shortest-trip reporting excludes zero distance while preserving those rows for inspection. Source data retains provider terms; code is MIT licensed.
-
-## Weather and neighbourhood enrichment
-
-See [Chicago Moves enrichment](docs/enrichment.md) for additional sources, safe community/weather joins, map exports and the independent weather catch-up window. Run `make enrich-sample` after the sample warehouse to preview synthetic enrichment data.
+Sources: [Chicago taxi trips](https://data.cityofchicago.org/Transportation/Taxi-Trips-2024-/ajtu-isnz),
+[community boundaries](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-current-/cauq-8yn6),
+[Open-Meteo historical weather](https://open-meteo.com/en/docs/historical-weather-api).
+Code is MIT licensed; source data retains its provider terms.

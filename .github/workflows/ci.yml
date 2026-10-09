@@ -1,6 +1,6 @@
-name: Tests and pipeline smoke test
+name: Layered pipeline checks
 jobs:
-  test:
+  postgres_compatibility:
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -34,14 +34,13 @@ jobs:
         java-version: '17'
     - run: curl -fsSL https://repo.maven.apache.org/maven2/org/postgresql/postgresql/42.7.5/postgresql-42.7.5.jar
         -o /tmp/postgresql.jar
-    - run: pip install '.[spark]'
-    - run: python -m unittest discover -s tests -v
-    - run: python tests/integration_ingestion.py
+    - run: pip install '.[spark,lake,test]'
+    - run: python tests/integration/integration_ingestion.py
     - run: python scripts/run_warehouse.py
-    - run: python tests/check_warehouse.py
+    - run: python tests/etl_validation/check_warehouse.py
     - run: 'python scripts/run_warehouse.py
 
-        python tests/check_warehouse.py'
+        python tests/etl_validation/check_warehouse.py'
     - name: Enrichment ingestion, joins, export and replay checks
       run: 'python -m taxi_pipeline.enrichment --sample data/sample/enrichment.json
         --start 2024-01-01 --end 2024-01-04
@@ -51,13 +50,51 @@ jobs:
 
         python scripts/run_enrichment.py
 
-        python tests/check_enrichment.py
+        python tests/etl_validation/check_enrichment.py
 
         python scripts/run_enrichment.py
 
-        python tests/check_enrichment.py
+        python tests/etl_validation/check_enrichment.py
 
         python scripts/export_enrichment.py'
+  suites:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        suite:
+        - functional
+        - integration
+        - etl_validation
+        - e2e
+    env:
+      SPARK_LOCAL_IP: 127.0.0.1
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '17'
+    - run: pip install '.[spark,lake,test]'
+    - name: Static and metadata checks
+      if: matrix.suite == 'functional'
+      run: 'python -m ruff check src pipelines tools tests
+
+        python tools/validate_metadata.py
+
+        cfn-lint infrastructure/aws/athena.yml'
+    - run: python -m pytest tests/${{ matrix.suite }} -v --junitxml=test-results/${{
+        matrix.suite }}.xml
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: tests-${{ matrix.suite }}
+        path: test-results/
 'on':
 - push
 - pull_request
+permissions:
+  contents: read

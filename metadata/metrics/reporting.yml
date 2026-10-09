@@ -1,0 +1,31 @@
+description: Reporting definitions; synthetic fixtures demonstrate behaviour, not
+  business performance.
+metrics:
+- name: total_trips
+  table: gold.mart_taxi_trip_enriched
+  expression: COUNT(DISTINCT trip_id)
+  unit: trips
+- name: reported_revenue
+  table: gold.mart_taxi_trip_enriched
+  expression: SUM(trip_total_usd)
+  unit: USD
+  limitation: Reported charge, not driver earnings or profit
+- name: top_earning_taxis
+  table: gold.mart_taxi_revenue_daily
+  expression: SUM(reported_total_usd) GROUP BY taxi_key
+  limitation: Taxi vehicle, not driver
+- name: longest_trip
+  table: gold.mart_taxi_trip_distance
+  expression: MAX(trip_distance_km)
+  unit: km
+- name: shortest_positive_trip
+  table: gold.mart_taxi_trip_distance
+  expression: MIN(trip_distance_km) WHERE trip_distance_km > 0
+  unit: km
+- name: area_demand
+  table: gold.mart_community_area_demand_daily
+  expression: SUM(trips) filtered to one activity
+  limitation: Pickup and Dropoff together double activity counts
+- name: passenger_gender
+  supported: false
+  reason: Not present in source; never infer gender
