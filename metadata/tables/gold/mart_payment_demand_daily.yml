@@ -1,0 +1,30 @@
+version: 1
+table: gold.mart_payment_demand_daily
+description: Mart payment demand daily.
+grain: One row per trip_date, payment_type.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_date
+- payment_type
+partition_by:
+- trip_date
+upstream:
+- silver.fact_taxi_trip
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: trip_date
+  type: date
+  nullable: false
+  description: Chicago local calendar date.
+- name: payment_type
+  type: string
+  nullable: false
+  description: Source payment category with Unknown fallback.
+- name: trips
+  type: bigint
+  nullable: true
+  description: Trip count at this table grain.
+- name: revenue_usd
+  type: decimal(30,6)
+  nullable: true
+  description: Sum of reported trip charges in USD; not profit.

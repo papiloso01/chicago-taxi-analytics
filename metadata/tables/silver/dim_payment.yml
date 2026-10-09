@@ -1,0 +1,20 @@
+version: 1
+table: silver.dim_payment
+description: Dim payment.
+grain: One row per payment_key.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- payment_key
+partition_by: []
+upstream:
+- bronze.taxi_trip_raw
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: payment_type
+  type: string
+  nullable: true
+  description: Source payment category with Unknown fallback.
+- name: payment_key
+  type: string
+  nullable: false
+  description: Stable SHA-256 warehouse key for payment.

@@ -1,0 +1,34 @@
+version: 1
+table: gold.mart_taxi_revenue_daily
+description: Mart taxi revenue daily.
+grain: One row per trip_date, taxi_key.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_date
+- taxi_key
+partition_by:
+- trip_date
+upstream:
+- silver.fact_taxi_trip
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: trip_date
+  type: date
+  nullable: false
+  description: Chicago local calendar date.
+- name: taxi_key
+  type: string
+  nullable: false
+  description: Stable SHA-256 warehouse key for taxi.
+- name: taxi_label
+  type: string
+  nullable: true
+  description: Taxi label at this table grain.
+- name: trips
+  type: bigint
+  nullable: true
+  description: Trip count at this table grain.
+- name: reported_total_usd
+  type: decimal(30,6)
+  nullable: true
+  description: Sum of reported trip charges in USD.

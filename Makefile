@@ -2,7 +2,7 @@ demo:
 	python scripts/demo.py
 
 test:
-	PYTHONPATH=src python -m unittest discover -s tests -v
+	PYTHONPATH=src python -m pytest tests/functional tests/integration tests/etl_validation tests/e2e -v
 
 sample:
 	docker compose run --rm pipeline taxi-pipeline --sample data/sample/trips.json --start 2024-01-01 --end 2024-01-04
@@ -20,3 +20,16 @@ enrich-sample:
 enrich:
 	docker compose run --rm pipeline python -m taxi_pipeline.enrichment
 	docker compose run --rm pipeline python scripts/run_enrichment.py
+
+
+lake-sample:
+	python pipelines/run_lake.py --sample
+
+lake-publish:
+	python pipelines/run_lake.py --publish
+
+export-dashboard:
+	python pipelines/export_dashboard.py
+
+metadata:
+	python tools/validate_metadata.py

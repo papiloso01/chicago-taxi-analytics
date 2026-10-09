@@ -1,0 +1,24 @@
+version: 1
+table: silver.dim_community_area
+description: Dim community area.
+grain: One row per area_id.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- area_id
+partition_by: []
+upstream:
+- bronze.community_area_raw
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: area_id
+  type: string
+  nullable: false
+  description: Chicago community area ID; nullable for unknown trip locations.
+- name: area_name
+  type: string
+  nullable: true
+  description: Community area label; Unknown where no source match exists.
+- name: geometry_geojson
+  type: string
+  nullable: true
+  description: Polygon/MultiPolygon geometry encoded as GeoJSON text.

@@ -2,7 +2,7 @@ import json,unittest
 from decimal import Decimal
 from datetime import date
 from pyspark.sql import SparkSession
-from taxi_pipeline.enrichment_models import build_enrichment
+from chicago_taxi.transformations.gold.enrichment import build_enrichment
 class EnrichmentSparkTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):

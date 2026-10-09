@@ -1,0 +1,40 @@
+version: 1
+table: gold.mart_community_area_demand_daily
+description: Mart community area demand daily.
+grain: One row per trip_date, area_id, activity.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_date
+- area_id
+- activity
+partition_by:
+- trip_date
+upstream:
+- gold.mart_taxi_trip_enriched
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: trip_date
+  type: date
+  nullable: false
+  description: Chicago local calendar date.
+- name: area_id
+  type: string
+  nullable: true
+  description: Chicago community area ID; nullable for unknown trip locations.
+- name: area_name
+  type: string
+  nullable: true
+  description: Community area label; Unknown where no source match exists.
+- name: activity
+  type: string
+  nullable: false
+  description: Pickup or Dropoff; filter to one activity to avoid counting each trip
+    twice.
+- name: trips
+  type: bigint
+  nullable: true
+  description: Trip count at this table grain.
+- name: reported_total_usd
+  type: decimal(30,6)
+  nullable: true
+  description: Sum of reported trip charges in USD.

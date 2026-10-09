@@ -1,0 +1,52 @@
+version: 1
+table: gold.mart_weather_demand_hourly
+description: Mart weather demand hourly.
+grain: One row per trip_date, trip_hour, weather_condition.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_date
+- trip_hour
+- weather_condition
+partition_by:
+- trip_date
+upstream:
+- gold.mart_taxi_trip_enriched
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: trip_date
+  type: date
+  nullable: false
+  description: Chicago local calendar date.
+- name: trip_hour
+  type: int
+  nullable: false
+  description: "Chicago local hour 0\u201323."
+- name: weather_condition
+  type: string
+  nullable: false
+  description: Dry, Wet, Snow, Unavailable or Ambiguous DST hour.
+- name: trips
+  type: bigint
+  nullable: true
+  description: Trip count at this table grain.
+- name: reported_total_usd
+  type: decimal(30,6)
+  nullable: true
+  description: Sum of reported trip charges in USD.
+- name: average_trip_duration_seconds
+  type: decimal(24,10)
+  nullable: true
+  description: Mean trip duration seconds at this reporting grain.
+- name: temperature_c
+  type: double
+  nullable: true
+  description: City-level ERA5 temperature in Celsius.
+- name: precipitation_mm
+  type: double
+  nullable: true
+  description: City-level ERA5 hourly precipitation in millimetres; never sum duplicated
+    trip-level weather.
+- name: snowfall_cm
+  type: double
+  nullable: true
+  description: City-level ERA5 hourly snowfall in centimetres.

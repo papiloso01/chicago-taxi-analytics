@@ -11,3 +11,9 @@ dbt/dbt_packages/
 .sparkStaging/
 dbt/.user.yml
 data/exports/
+data/lake/
+test-results/
+.pytest_cache/
+.ruff_cache/
+ai-review.md
+data/legacy_lake/

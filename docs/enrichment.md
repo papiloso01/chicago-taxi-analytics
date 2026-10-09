@@ -1,3 +1,6 @@
+> This document describes the retained PostgreSQL compatibility path. For the Athena target,
+> see [native lake operations](operations/athena.md).
+
 # Chicago Moves: weather and community-area enrichment
 
 ## Sources

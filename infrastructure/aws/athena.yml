@@ -1,0 +1,191 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Chicago taxi Athena storage, catalog and GitHub OIDC publisher role.
+  No compute resources.
+Parameters:
+  GitHubRepository:
+    Type: String
+    Default: papiloso01/chicago-taxi-analytics
+  GitHubOidcProviderArn:
+    Type: String
+    Description: Existing IAM OIDC provider ARN for token.actions.githubusercontent.com
+  DatabasePrefix:
+    Type: String
+    Default: chicago_taxi
+    AllowedPattern: '[a-z][a-z0-9_]*'
+Resources:
+  LakeBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  LakeBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: LakeBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Deny
+          Principal: '*'
+          Action: s3:*
+          Resource:
+          - Fn::GetAtt:
+            - LakeBucket
+            - Arn
+          - Fn::Sub: ${LakeBucket.Arn}/*
+          Condition:
+            Bool:
+              aws:SecureTransport: 'false'
+  QueryResultsBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
+    Properties:
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+        - ServerSideEncryptionByDefault:
+            SSEAlgorithm: AES256
+      VersioningConfiguration:
+        Status: Enabled
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+  QueryResultsBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket:
+        Ref: QueryResultsBucket
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Deny
+          Principal: '*'
+          Action: s3:*
+          Resource:
+          - Fn::GetAtt:
+            - QueryResultsBucket
+            - Arn
+          - Fn::Sub: ${QueryResultsBucket.Arn}/*
+          Condition:
+            Bool:
+              aws:SecureTransport: 'false'
+  BronzeDatabase:
+    Type: AWS::Glue::Database
+    Properties:
+      CatalogId:
+        Ref: AWS::AccountId
+      DatabaseInput:
+        Name:
+          Fn::Sub: ${DatabasePrefix}_bronze
+  SilverDatabase:
+    Type: AWS::Glue::Database
+    Properties:
+      CatalogId:
+        Ref: AWS::AccountId
+      DatabaseInput:
+        Name:
+          Fn::Sub: ${DatabasePrefix}_silver
+  GoldDatabase:
+    Type: AWS::Glue::Database
+    Properties:
+      CatalogId:
+        Ref: AWS::AccountId
+      DatabaseInput:
+        Name:
+          Fn::Sub: ${DatabasePrefix}_gold
+  AthenaWorkgroup:
+    Type: AWS::Athena::WorkGroup
+    Properties:
+      Name:
+        Fn::Sub: ${AWS::StackName}-analytics
+      WorkGroupConfiguration:
+        EnforceWorkGroupConfiguration: true
+        PublishCloudWatchMetricsEnabled: true
+        BytesScannedCutoffPerQuery: 1073741824
+        EngineVersion:
+          SelectedEngineVersion: Athena engine version 3
+        ResultConfiguration:
+          OutputLocation:
+            Fn::Sub: s3://${QueryResultsBucket}/results/
+          EncryptionConfiguration:
+            EncryptionOption: SSE_S3
+  PipelineRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Federated:
+              Ref: GitHubOidcProviderArn
+          Action: sts:AssumeRoleWithWebIdentity
+          Condition:
+            StringEquals:
+              token.actions.githubusercontent.com:aud: sts.amazonaws.com
+              token.actions.githubusercontent.com:sub:
+                Fn::Sub: repo:${GitHubRepository}:ref:refs/heads/main
+      Policies:
+      - PolicyName: TaxiLakePublisher
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - s3:ListBucket
+            Resource:
+              Fn::GetAtt:
+              - LakeBucket
+              - Arn
+            Condition:
+              StringLike:
+                s3:prefix:
+                - chicago_taxi/*
+          - Effect: Allow
+            Action:
+            - s3:GetObject
+            - s3:PutObject
+            - s3:DeleteObject
+            Resource:
+              Fn::Sub: ${LakeBucket.Arn}/chicago_taxi/*
+          - Effect: Allow
+            Action:
+            - glue:CreateDatabase
+            - glue:GetDatabase
+            - glue:CreateTable
+            - glue:GetTable
+            - glue:UpdateTable
+            - glue:DeleteTable
+            Resource:
+            - Fn::Sub: arn:${AWS::Partition}:glue:${AWS::Region}:${AWS::AccountId}:catalog
+            - Fn::Sub: arn:${AWS::Partition}:glue:${AWS::Region}:${AWS::AccountId}:database/${DatabasePrefix}_*
+            - Fn::Sub: arn:${AWS::Partition}:glue:${AWS::Region}:${AWS::AccountId}:table/${DatabasePrefix}_*/*
+Outputs:
+  LakeBucket:
+    Value:
+      Ref: LakeBucket
+  QueryResultsBucket:
+    Value:
+      Ref: QueryResultsBucket
+  AthenaWorkgroup:
+    Value:
+      Ref: AthenaWorkgroup
+  PipelineRoleArn:
+    Value:
+      Fn::GetAtt:
+      - PipelineRole
+      - Arn

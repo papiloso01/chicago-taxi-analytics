@@ -1,6 +1,6 @@
 import unittest
 from datetime import date
-from taxi_pipeline.windows import daily_window,year_window
+from chicago_taxi.ingestion.windows import daily_window,year_window
 class WindowTests(unittest.TestCase):
     def test_daily(self):
         self.assertEqual(daily_window(date(2026,1,1)),("2025-12-31","2026-01-01"))

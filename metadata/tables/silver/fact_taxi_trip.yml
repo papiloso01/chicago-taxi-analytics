@@ -1,0 +1,94 @@
+version: 1
+table: silver.fact_taxi_trip
+description: Fact taxi trip.
+grain: One row per trip_id.
+owner: Chicago taxi analytics maintainer
+primary_key:
+- trip_id
+partition_by:
+- trip_date
+upstream:
+- bronze.taxi_trip_raw
+refresh: Daily source ingestion; full snapshot publication after validation.
+columns:
+- name: dropoff_community_area
+  type: string
+  nullable: true
+  description: Source or enriched dropoff community area; Unknown/null when unavailable.
+- name: pickup_community_area
+  type: string
+  nullable: true
+  description: Source or enriched pickup community area; Unknown/null when unavailable.
+- name: company
+  type: string
+  nullable: true
+  description: Source company label with Unknown fallback.
+- name: payment_type
+  type: string
+  nullable: true
+  description: Source payment category with Unknown fallback.
+- name: taxi_id
+  type: string
+  nullable: true
+  description: Anonymised vehicle identifier; not a driver identity.
+- name: trip_id
+  type: string
+  nullable: false
+  description: Unique source trip identifier.
+- name: trip_duration_seconds
+  type: decimal(20,6)
+  nullable: false
+  description: Reported trip duration in seconds.
+- name: trip_distance_miles
+  type: decimal(20,6)
+  nullable: true
+  description: Reported trip distance in miles.
+- name: fare_usd
+  type: decimal(20,6)
+  nullable: true
+  description: Reported fare in USD.
+- name: tips_usd
+  type: decimal(20,6)
+  nullable: true
+  description: Reported tips in USD; missing values stay null.
+- name: trip_total_usd
+  type: decimal(20,6)
+  nullable: false
+  description: Reported total trip charge in USD; not driver profit.
+- name: started_at
+  type: string
+  nullable: true
+  description: Chicago local trip start as text; rounded source time, no inferred
+    UTC offset.
+- name: trip_date
+  type: date
+  nullable: false
+  description: Chicago local calendar date.
+- name: trip_hour
+  type: int
+  nullable: false
+  description: "Chicago local hour 0\u201323."
+- name: trip_distance_km
+  type: decimal(24,6)
+  nullable: false
+  description: Reported miles multiplied by 1.609344; not a reconstructed road route.
+- name: taxi_key
+  type: string
+  nullable: false
+  description: Stable SHA-256 warehouse key for taxi.
+- name: payment_key
+  type: string
+  nullable: true
+  description: Stable SHA-256 warehouse key for payment.
+- name: company_key
+  type: string
+  nullable: true
+  description: Stable SHA-256 warehouse key for company.
+- name: pickup_area_key
+  type: string
+  nullable: false
+  description: Stable SHA-256 warehouse key for pickup area.
+- name: dropoff_area_key
+  type: string
+  nullable: false
+  description: Stable SHA-256 warehouse key for dropoff area.

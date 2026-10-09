@@ -1,7 +1,7 @@
 import copy
 import unittest
 from datetime import date
-from taxi_pipeline.enrichment import normalize_areas,normalize_weather,weather_batches
+from chicago_taxi.ingestion.weather_community import normalize_areas,normalize_weather,weather_batches
 UNITS={'temperature_2m':'°C','precipitation':'mm','snowfall':'cm'}
 def response(times,temps=None):return {'hourly_units':UNITS,'hourly':{'time':times,'temperature_2m':temps or [5.0]*len(times),'precipitation':[0.0]*len(times),'snowfall':[0.0]*len(times)}}
 class EnrichmentTests(unittest.TestCase):
