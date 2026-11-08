@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "capture_method": "transactional_outbox",
+  "source_system": "lending-postgres-dev",
+  "event_id": "00000000-0000-0000-0000-000000000002",
+  "event_sequence": "2",
+  "source_schema": "lending",
+  "source_table": "loans",
+  "operation": "I",
+  "record_key": {
+    "loan_id": 1002
+  },
+  "record_data": {
+    "loan_id": 1002,
+    "principal_amount": "2000.00",
+    "currency": "GBP",
+    "status": "active",
+    "created_at": "2026-11-01T10:00:00Z",
+    "updated_at": "2026-11-01T10:00:00Z"
+  },
+  "captured_at": "2026-11-01T12:00:00Z"
+}

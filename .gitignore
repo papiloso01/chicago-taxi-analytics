@@ -23,3 +23,7 @@ config/*.local.json
 
 # Editable-install metadata
 *.egg-info/
+
+# Local Iceberg demo output and deployable Python zip
+data/lending/
+spark-warehouse/
