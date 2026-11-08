@@ -17,3 +17,9 @@ test-results/
 .ruff_cache/
 ai-review.md
 data/legacy_lake/
+
+# Local CDC connection settings (no passwords in committed configuration)
+config/*.local.json
+
+# Editable-install metadata
+*.egg-info/

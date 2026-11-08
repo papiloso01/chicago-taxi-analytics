@@ -1,0 +1,13 @@
+{
+  "pg_host": "REPLACE_WITH_YOUR_RDS_ENDPOINT",
+  "sslrootcert": "C:/Users/UL16/Downloads/eu-north-1-bundle.pem",
+  "pg_dbname": "transactions",
+  "pg_user": "cdc_exporter",
+  "bucket": "cdc-lakehouse-raw-ul16",
+  "region": "eu-north-1",
+  "profile": "cdc-dev",
+  "source_system": "lending-postgres-dev",
+  "prefix": "postgresql/outbox",
+  "batch_size": 100,
+  "max_batches": 1
+}
