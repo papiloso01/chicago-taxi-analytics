@@ -100,3 +100,12 @@ Code is MIT licensed; source data retains its provider terms.
 ## Synthetic lending CDC lab
 
 A separate [transactional-outbox lending workload](docs/lending-cdc/README.md) demonstrates PostgreSQL changes delivered to replayable raw S3 objects. AWS DMS is unavailable on the current Free plan, so this is trigger-based capture, not log-based DMS replication. Glue/Iceberg/Athena processing for this workload is planned next.
+
+## Lending CDC interview lab
+
+The separate [lending CDC lab](docs/lending-cdc/README.md) captures PostgreSQL row changes
+through a transactional outbox and exports immutable event JSON to S3. Its
+[PySpark/Iceberg stage](docs/lending-cdc/iceberg.md) validates events, quarantines bad input,
+merges current state with delete/replay protection, and builds a loan portfolio reporting
+table. Local Docker and dedicated Iceberg CI require no AWS credentials. Managed Glue job
+creation is currently blocked by account access; it is not presented as deployed.

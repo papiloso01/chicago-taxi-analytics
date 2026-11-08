@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "capture_method": "transactional_outbox",
+  "source_schema": "lending",
+  "tables": {
+    "loans": {
+      "key": "loan_id",
+      "fields": {
+        "loan_id": "bigint",
+        "principal_amount": "decimal(12,2)",
+        "currency": "string",
+        "status": "string",
+        "created_at": "timestamp",
+        "updated_at": "timestamp"
+      },
+      "enums": {"status": ["active", "closed"]},
+      "positive": ["principal_amount"]
+    },
+    "loan_transactions": {
+      "key": "transaction_id",
+      "fields": {
+        "transaction_id": "bigint",
+        "loan_id": "bigint",
+        "transaction_type": "string",
+        "amount": "decimal(12,2)",
+        "occurred_at": "timestamp",
+        "updated_at": "timestamp"
+      },
+      "enums": {"transaction_type": ["disbursement", "repayment"]},
+      "positive": ["amount"]
+    }
+  }
+}

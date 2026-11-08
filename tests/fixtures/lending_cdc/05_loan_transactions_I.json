@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "capture_method": "transactional_outbox",
+  "source_system": "lending-postgres-dev",
+  "event_id": "00000000-0000-0000-0000-000000000005",
+  "event_sequence": "5",
+  "source_schema": "lending",
+  "source_table": "loan_transactions",
+  "operation": "I",
+  "record_key": {
+    "transaction_id": 5003
+  },
+  "record_data": {
+    "transaction_id": 5003,
+    "loan_id": 1001,
+    "transaction_type": "repayment",
+    "amount": "100.00",
+    "occurred_at": "2026-11-01T11:00:00Z",
+    "updated_at": "2026-11-01T11:00:00Z"
+  },
+  "captured_at": "2026-11-01T12:00:00Z"
+}

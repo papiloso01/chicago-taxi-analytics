@@ -122,6 +122,29 @@ jobs:
       with:
         name: tests-postgres-outbox
         path: test-results/
+  iceberg_cdc:
+    runs-on: ubuntu-latest
+    env:
+      SPARK_LOCAL_IP: 127.0.0.1
+      ICEBERG_RUNTIME_JAR: /tmp/iceberg/iceberg-spark-runtime-3.5_2.12-1.7.1.jar
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '17'
+    - run: 'pip install ''.[spark,cdc,test]''
+
+        python scripts/fetch_iceberg_runtime.py --directory /tmp/iceberg'
+    - run: python -m pytest tests/iceberg -v --junitxml=test-results/iceberg.xml
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: tests-iceberg
+        path: test-results/
 'on':
 - push
 - pull_request

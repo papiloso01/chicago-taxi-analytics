@@ -133,3 +133,10 @@ try {
 ```
 
 The private connection string must reference your local published Docker port and `cdc_test`, for example `host=localhost port=5432 dbname=cdc_test user=YOUR_LOCAL_USER password=YOUR_LOCAL_PASSWORD`. Do not paste the actual connection string into chat. PostgreSQL is real in these tests; S3 remains emulated with Moto. Expect nine passes, with no skips when CDC_TEST_DSN is set.
+
+## PySpark and Iceberg stage
+
+See [iceberg.md](iceberg.md) for local Docker execution, versioned contracts, real Iceberg
+CDC merge tests, failure/replay semantics, reporting joins and the future Glue deployment.
+Glue job creation is currently blocked by account-level AccessDenied; local execution is
+separate from managed cloud execution.

@@ -32,3 +32,6 @@ exclude = ["src/taxi_pipeline", "dbt"]
 
 [tool.ruff.lint]
 select = ["E9", "F63", "F7", "F82"]
+
+[tool.setuptools.package-data]
+lending_cdc = ["contracts/*.json"]

@@ -173,6 +173,30 @@ jobs:
     - run: python -m pytest tests/integration/test_outbox_postgres.py -v --junitxml=test-results/postgres-outbox.xml
     - store_test_results:
         path: test-results
+  iceberg_cdc:
+    docker:
+    - image: cimg/python:3.11
+    resource_class: medium
+    environment:
+      SPARK_LOCAL_IP: 127.0.0.1
+      JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+      ICEBERG_RUNTIME_JAR: /tmp/iceberg/iceberg-spark-runtime-3.5_2.12-1.7.1.jar
+    steps:
+    - checkout
+    - run:
+        name: Install Java and Iceberg dependencies
+        command: 'sudo apt-get update
+
+          sudo apt-get install -y openjdk-17-jre-headless
+
+          python -m pip install ''.[spark,cdc,test]''
+
+          python scripts/fetch_iceberg_runtime.py --directory /tmp/iceberg'
+    - run:
+        name: Validate real Iceberg CDC merges and replay
+        command: python -m pytest tests/iceberg -v --junitxml=test-results/iceberg.xml
+    - store_test_results:
+        path: test-results
 workflows:
   validate_platform:
     jobs:
@@ -191,5 +215,8 @@ workflows:
         requires:
         - functional
     - postgres_outbox:
+        requires:
+        - functional
+    - iceberg_cdc:
         requires:
         - functional
