@@ -114,6 +114,8 @@ jobs:
       with:
         python-version: '3.11'
     - run: pip install '.[cdc,test]'
+    - name: Wait for isolated CDC PostgreSQL
+      run: python scripts/wait_cdc_database.py
     - run: python -m pytest tests/integration/test_outbox_postgres.py -v --junitxml=test-results/postgres-outbox.xml
     - uses: actions/upload-artifact@v4
       if: always()

@@ -167,10 +167,9 @@ jobs:
     steps:
     - checkout
     - run: python -m pip install '.[cdc,test]'
-    - run: "python - <<'WAIT'\nimport os,time,psycopg\nfor attempt in range(30):\n\
-        \    try:\n        with psycopg.connect(os.environ['CDC_TEST_DSN']): pass\n\
-        \        break\n    except psycopg.OperationalError:\n        if attempt ==\
-        \ 29: raise\n        time.sleep(1)\nWAIT"
+    - run:
+        name: Wait for isolated CDC PostgreSQL
+        command: python scripts/wait_cdc_database.py
     - run: python -m pytest tests/integration/test_outbox_postgres.py -v --junitxml=test-results/postgres-outbox.xml
     - store_test_results:
         path: test-results

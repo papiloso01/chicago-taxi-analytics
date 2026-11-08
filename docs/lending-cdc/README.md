@@ -113,3 +113,23 @@ Unit tests do not prove cloud permissions or live RDS connectivity. Live accepta
 ## Next stages
 
 Glue validation/quarantine, per-key deduplication, Iceberg CDC merges including deletes and replay protection, Athena reconciliation and reporting/model-feature datasets. MySQL will be a separate source adapter after the PostgreSQL path works. IAM, networking, costs and any Free-plan restrictions remain explicit deployment prerequisites.
+
+### Run the nine PostgreSQL tests on your Windows Docker host
+
+A running desktop PostgreSQL container is not reachable from this assistant's cloud workspace. Run the tests on the desktop that owns Docker. Use a separate, disposable database called `cdc_test` in that container; never use the RDS database `transactions` or an existing application database. The fixture resets the lending/cdc schemas inside cdc_test.
+
+After pulling this branch and installing `.[cdc,test]`, supply the local test connection privately in PowerShell (this avoids storing the password in command history):
+
+```powershell
+$testConnection = Read-Host 'Local cdc_test connection string' -AsSecureString
+$env:CDC_TEST_DSN = [System.Net.NetworkCredential]::new('', $testConnection).Password
+try {
+    .\.venv\Scripts\python.exe scripts/wait_cdc_database.py
+    if ($LASTEXITCODE -ne 0) { throw 'Test database connection failed' }
+    .\.venv\Scripts\python.exe -m pytest tests/integration/test_outbox_postgres.py -v
+} finally {
+    Remove-Item Env:CDC_TEST_DSN -ErrorAction SilentlyContinue
+}
+```
+
+The private connection string must reference your local published Docker port and `cdc_test`, for example `host=localhost port=5432 dbname=cdc_test user=YOUR_LOCAL_USER password=YOUR_LOCAL_PASSWORD`. Do not paste the actual connection string into chat. PostgreSQL is real in these tests; S3 remains emulated with Moto. Expect nine passes, with no skips when CDC_TEST_DSN is set.
