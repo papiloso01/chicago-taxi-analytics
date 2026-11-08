@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "capture_method": "transactional_outbox",
+  "source_system": "lending-postgres-dev",
+  "event_id": "00000000-0000-0000-0000-000000000001",
+  "event_sequence": "1",
+  "source_schema": "lending",
+  "source_table": "loans",
+  "operation": "I",
+  "record_key": {"loan_id": 1001},
+  "record_data": {"loan_id": 1001, "principal_amount": "1000.00"},
+  "captured_at": "2026-11-08T00:00:00.000000Z"
+}

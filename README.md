@@ -96,3 +96,7 @@ Sources: [Chicago taxi trips](https://data.cityofchicago.org/Transportation/Taxi
 [community boundaries](https://data.cityofchicago.org/Facilities-Geographic-Boundaries/Boundaries-Community-Areas-current-/cauq-8yn6),
 [Open-Meteo historical weather](https://open-meteo.com/en/docs/historical-weather-api).
 Code is MIT licensed; source data retains its provider terms.
+
+## Synthetic lending CDC lab
+
+A separate [transactional-outbox lending workload](docs/lending-cdc/README.md) demonstrates PostgreSQL changes delivered to replayable raw S3 objects. AWS DMS is unavailable on the current Free plan, so this is trigger-based capture, not log-based DMS replication. Glue/Iceberg/Athena processing for this workload is planned next.
