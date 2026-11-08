@@ -18,7 +18,7 @@ SELECT event_id, source_schema, source_table,
        jsonb_build_object(
            'schema_version', 1,
            'capture_method', 'transactional_outbox',
-           'source_system', %s,
+           'source_system', %s::text,
            'event_id', event_id::text,
            'event_sequence', event_sequence::text,
            'source_schema', source_schema,
