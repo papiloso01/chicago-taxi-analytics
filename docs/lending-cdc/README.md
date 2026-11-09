@@ -140,3 +140,8 @@ See [iceberg.md](iceberg.md) for local Docker execution, versioned contracts, re
 CDC merge tests, failure/replay semantics, reporting joins and the future Glue deployment.
 Glue job creation is currently blocked by account-level AccessDenied; local execution is
 separate from managed cloud execution.
+
+## Athena SQL refresh
+
+See [Athena refresh](athena-refresh.md) for the cloud Iceberg path using Athena
+compute, including the SQL files, batch validation, replay and reconciliation.
